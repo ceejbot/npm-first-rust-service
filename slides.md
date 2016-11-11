@@ -1,13 +1,13 @@
-# npm's first rust service
+# npm's first Rust service
 
 ---
 
 # [fit] the problem: add a feature to
-# [fit] npm's simplest microservice
+# [fit] npm's __simplest__ microservice
 
 ---
 
-# [fit] why was this non-trivial?
+# why was this __non-trivial__?
 
 - the microservice was old: vintage 2014
 - not git-deployable
@@ -39,13 +39,13 @@
 
 ---
 
-# [fit] I spent an afternoon rewriting the
+# [fit] I spent an afternoon __rewriting__ the
 # [fit] existing javascript service
 
 ---
 
-# [fit] fallback plan
-# [fit] familiarity with the problem
+# [fit] fallback plan in case
+# [fit] my rewrite __failed__
 
 ---
 
@@ -58,12 +58,13 @@
 var server = require('restify').createServer({ name: 'public-license-api' });
 var proxy = require('http-proxy').createProxyServer();
 
-Monitor(server); // <--- add our monitoring hooks
+Monitor(server); // <--- adds our monitoring hooks
 server.get('/license/:productId/:billingId/:licenseKey', fetchLicense);
 server.post('/stripe/callback', stripeCallback);
 
 server.listen(process.env.port, process.env.host || '0.0.0.0', function() {
-    logger.info(`starting public-license-api on port ${process.env.PORT}`);    
+    logger.info(`starting public-license-api on port ${process.env.PORT}`);
+    process.emit('metric', {name: 'start'});
 });
 ```
 
@@ -84,12 +85,12 @@ So. Little. Code.
 ---
 
 # [fit] task: learn Go, then reimplement
-# [fit] I bounced off Go hard
+# [fit] I bounced off __Go__ hard
 
 ---
 
-# [fit] no per-project dep management
-# [fit] no package registry
+# [fit] no modern dependency management
+# [fit] ran into WTF is GO_PATH immediately
 # [fit] verbose language with no payoffs
 # [fit] no new ideas since the 70s
 
@@ -97,7 +98,6 @@ So. Little. Code.
 
 # [fit] give up? nah.
 # [fit] I decided to give __Rust__ a try.
-
 
 ---
 
@@ -107,18 +107,18 @@ So. Little. Code.
 
 ---
 
-# [fit] more direct access to hardware/memory
-# [fit] more control / more responsibility
+# [fit] more __direct__ access to hardware/memory
+# [fit] more __control__ / more responsibility
 # [fit] PITA vs performance tradeoff
 
 ---
 
 # [fit] systems languages are what
-# [fit] everything else is implemented in
+# [fit] __everything else__ is implemented in
 
 ---
 
-# [fit] Mozilla invented Rust
+# [fit] __Mozilla__ invented Rust
 # [fit] to write their next browser in
 # [fit] "safe, concurrent, practical language"
 
@@ -132,6 +132,7 @@ So. Little. Code.
 
 # [fit] no exceptions, only return values
 # [fit] `match` on the Some<T>, None option
+# [fit] can you say monad? sure you can
 
 ---
 
@@ -165,7 +166,7 @@ fn get_env_var<'a>(name: &'a str) -> std::string::String
 ---
 
 # [fit] we have perf-critical work coming up
-# [fit] best to get experience _now_
+# [fit] best to get experience __now__
 
 ---
 
@@ -205,8 +206,7 @@ fn main()
 
 ---
 
-
-# [fit] Pencil: http framework
+# [fit] [pencil](http://fengsp.github.io/pencil/pencil/): http framework
 # [fit] inspired by flask
 # [fit] familiar to users of restify
 
@@ -379,6 +379,7 @@ fn proxy_request(request: &Request, request_body: Vec<u8>,
 # to-do list
 
 1. finish up the metrics emitter & publish it
+1. contribute Pencil changes back upstream
 1. continue to learn Rust idioms & rewrite
 1. fix my proxy code omg
 1. build server & build artifact deployer

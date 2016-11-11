@@ -342,6 +342,10 @@ emitter().emit_name_val_tag("response", 23, "status", "200");
 
 ---
 
+![fit](logging+metrics+status.jpg)
+
+---
+
 # [fit] the server is operationalized
 # [fit] now actually __proxy__ something!
 
